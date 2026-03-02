@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" width="100%" height="100%">
+    <rect width="900" height="450" fill="#0f172a" rx="10"/>
+    
+    <!-- Title -->
+    <text x="450" y="40" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">Universal Decision Companion - System Architecture</text>
+
+    <!-- Definitions for markers (arrows) -> -->
+    <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8" />
+        </marker>
+        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
+        </marker>
+    </defs>
+
+    <!-- Engine Bounding Box -->
+    <rect x="615" y="60" width="250" height="305" rx="15" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8,8"/>
+    <text x="740" y="390" fill="#94a3b8" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Universal MCDA Engine</text>
+
+    <!-- Frontend -->
+    <rect x="50" y="160" width="200" height="80" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
+    <text x="150" y="195" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">Frontend (React / Vite)</text>
+    <text x="150" y="215" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Dynamic UI &amp; State</text>
+
+    <!-- Arrow Frontend to Backend -->
+    <line x1="250" y1="200" x2="330" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="290" y="190" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Scope JSON</text>
+
+    <!-- API Layer -->
+    <rect x="340" y="160" width="180" height="80" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
+    <text x="430" y="195" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">FastAPI Backend</text>
+    <text x="430" y="215" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Validation &amp; Routing</text>
+
+    <!-- Arrows API to Engine -->
+    <line x1="520" y1="180" x2="620" y2="120" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="520" y1="220" x2="620" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+    <line x1="520" y1="200" x2="620" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+
+    <!-- Decision Engine Core -->
+    <rect x="630" y="80" width="220" height="70" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="740" y="115" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Normalization Layer</text>
+    <text x="740" y="135" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Min-Max Scale &amp; Math Edge Handling</text>
+
+    <!-- Analysis Engine -->
+    <rect x="630" y="165" width="220" height="70" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="740" y="200" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Scoring &amp; Explanation</text>
+    <text x="740" y="220" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Weighted Sums &amp; Deficit Analysis</text>
+
+    <!-- Meta-Analysis -->
+    <rect x="630" y="250" width="220" height="70" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <text x="740" y="285" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Analysis Engine</text>
+    <text x="740" y="305" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Sensitivity &amp; Confidence Constraints</text>
+
+    <!-- Return Arrow -->
+    <path d="M 630 310 Q 430 400 150 240" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-green)"/>
+    <text x="390" y="340" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Rankings + Explanations + Meta-Analysis Dashboard Payload</text>
+
+</svg>

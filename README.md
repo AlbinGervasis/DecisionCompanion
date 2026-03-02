@@ -19,20 +19,7 @@ The system algorithm is fully abstracted, meaning it supports any numeric decisi
 ## 3. Architecture Overview & Maturity
 The engine is structured modularly with clear separation of concerns to handle scoring, explanation generation, and meta-analysis independently.
 
-```mermaid
-flowchart TD
-    UI[Frontend (React/Vite)] -->|Live Sliders & Options| API[FastAPI API Layer]
-    API -->|Validation Layer| Engine[Decision Engine]
-    
-    subgraph Engine [Backend Process]
-        Norm[Normalization Layer] --> Scorer[Scoring Layer]
-        Scorer --> Exp[Explanation Engine]
-        Scorer --> Meta[Analysis Engine\nSensitivity & Confidence]
-    end
-    
-    Engine --> |Rich JSON Payload| API
-    API --> |Dashboard & Meta-Insights| UI
-```
+![Universal Decision Architecture Diagram](architecture.svg)
 
 ## 4. Mathematical Justification
 Why use the **Weighted Sum Model (WSM)** combined with **Min-Max Normalization**?
