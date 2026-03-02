@@ -62,14 +62,27 @@ The system does not just spit out a final score. Our `Explanation Engine` and `A
 *   **Decision Confidence**: Analyzes the mathematical margin between rank 1 and rank 2 to declare if the decision is computationally "strong" or "weak/competitive".
 *   **Sensitivity Analysis (Stability Score)**: The backend automatically loops weight variations (±10%) to see if the current #1 choice remains #1 when preferences shift, signaling robustness against uncertainty.
 
-## 6. Limitations (Crucial Engineering Context)
-Awareness of algorithmic limits is essential for mature engineering:
-*   **Assumes Linear Preference**: The model assumes that moving from a $100 to $200 cost carries the exact same weight penalty as moving from $1000 to $1100.
-*   **Does Not Capture Interaction**: The criteria are considered completely independent. Interaction terms (e.g., High Performance + Low Battery = negative synergy) are not automatically factored.
-*   **Sensitive to Extreme Values (Outliers)**: Because it relies on basic Min-Max normalization, a single extreme outlier can skew the normalization bounds for all subsequent options.
-*   **Requires Numeric Scoring**: Qualitative assessments must be manually converted to a numeric rating scale by the user.
+## 8. Real-World Decision Scenarios
+The power of the **Universal Decision Companion** lies in its ability to adapt to any numeric evaluation framework. Below are documented scenarios demonstrating how users can leverage the system:
 
-## 7. Edge Case Handling Strategies
-*   **Identical Values (Division-by-Zero Prevention)**: If Option A and Option B both score the exact same value in a specific criteria, the `NormalizationLayer` bypasses the Min-Max formula and applies a flat `1.0` bonus to both simultaneously.
-*   **Zero-Weight Criteria**: Normalizes naturally but multiplies by exactly `0` gracefully.
-*   **Missing Data gracefully handled** via baseline fallback parameters.
+### 💼 Scenario A: Selecting a Job Offer
+**Context**: You have three offers: a high-paying Big Tech role, a risky startup with equity, and a balanced agency role.
+*   **Goal**: Maximize long-term career growth while maintaining a decent commute.
+*   **Key Criteria**: Base Salary (Benefit), Growth Potential (Benefit), Commute Time (Cost), Culture (Benefit).
+*   **System Value**: The engine identifies that while Big Tech pays 20% more, the "Startup" wins on **Stability Score** if Growth Potential is weighted above 35%.
+
+### 💻 Scenario B: Enterprise Procurement (Laptops)
+**Context**: An engineering lead needs to choose the standard fleet for a dev team.
+*   **Goal**: Performance and Portability within a strict budget.
+*   **Key Criteria**: Price (Cost), Performance RAM/CPU (Benefit), Battery (Benefit), Weight (Cost).
+*   **System Value**: The **Deficit Analysis** reveals that the Dell XPS was penalized primarily by **Price**, making the MacBook Air the optimal choice for the current budget weight.
+
+### ✈️ Scenario C: Travel Planning
+**Context**: Choosing between Bali, Tokyo, and Rome for a 2-week vacation.
+*   **Goal**: Best weather and safety within a flight budget.
+*   **Key Criteria**: Flight Cost (Cost), Weather Score (Benefit), Activities (Benefit), Safety (Benefit).
+*   **System Value**: The **Confidence Protocol** alerts the user when the margin between Tokyo and Bali is <5%, suggesting that the choice is "highly competitive" and may depend on subjective preference.
+
+## 9. Local Deployment & Persistence
+*   **Local Storage**: Decisions are automatically cached in the browser's `localStorage`, allowing you to close the app and return to your evaluation matrix at any time.
+*   **Save/Export**: Use the "Save Scope" button to permanently name and archive a specific decision scenario in your local database.
