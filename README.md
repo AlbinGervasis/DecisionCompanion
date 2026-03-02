@@ -16,10 +16,35 @@ The system algorithm is fully abstracted, meaning it supports any numeric decisi
 *   At least 2 options are required for meaningful ranking.
 *   Criteria types must be explicitly defined as "benefit" (higher is better) or "cost" (lower is better).
 
-## 3. Architecture Overview & Maturity
-The engine is structured modularly with clear separation of concerns to handle scoring, explanation generation, and meta-analysis independently.
+## 3. Detailed Architecture & Decision Lifecycle
+The DecisionCompanion follows a sophisticated multi-stage pipeline designed for both mathematical rigor and human interpretability.
 
-![Universal Decision Architecture Diagram](architecture.svg)
+### System-Wide Flow (Mermaid)
+```mermaid
+graph LR
+    A[UI Dashboard] -- "Decision Context (JSON)" --> B[FastAPI Backend]
+    
+    subgraph "MCDA ENGINE"
+        B --> C[Normalization Layer]
+        C -- "Min-Max Scaled Data" --> D[Scoring Engine]
+        D -- "Weighted Sums" --> E[Explanation Engine]
+        D -- "Rankings" --> F[Analysis Engine]
+    end
+
+    E -- "Deficit Analysis" --> G[Dashboard Metrics]
+    F -- "Sensitivity & Confidence" --> G
+    
+    G -- "Animated Ranking Update" --> A
+```
+
+### The 4-Stage Lifecycle:
+1.  **Context Injection**: The user defines a decision domain (e.g., "Choosing a Tech Stack"). Constraints, criteria, and relative weights are bundled into a `Decision Context`.
+2.  **Normalization Tier**: The engine sanitizes raw numerical data. It automatically differentiates between **Benefit Criteria** (Price ↑ = Score ↑) and **Cost Criteria** (Price ↑ = Score ↓), mapping all units to a uniform 0.0–1.0 scale.
+3.  **Synthesis Tier**: Weights are applied to the normalized matrix. The system uses a **Deterministic Weighted Sum Model (WSM)** to produce final rankings, ensuring zero "black-box" behavior.
+4.  **Meta-Insight Tier**: Before returning results, the system executes three secondary analysis algorithms:
+    *   **Deficit Analysis**: "Why specifically did Option B lose to Option A?"
+    *   **Sensitivity Testing**: "If I change my preference weights by ±10%, does the winner remain the same?"
+    *   **Confidence Protocol**: "Is the mathematical margin between rank 1 and 2 significant enough to be considered a 'strong' decision?"
 
 ## 4. Mathematical Justification
 Why use the **Weighted Sum Model (WSM)** combined with **Min-Max Normalization**?
