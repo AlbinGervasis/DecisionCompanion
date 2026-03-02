@@ -1,59 +1,89 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" width="100%" height="100%">
-    <rect width="900" height="450" fill="#0f172a" rx="10"/>
-    
-    <!-- Title -->
-    <text x="450" y="40" fill="#f8fafc" font-family="sans-serif" font-size="22" font-weight="bold" text-anchor="middle">Universal Decision Companion - System Architecture</text>
-
-    <!-- Definitions for markers (arrows) -> -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%">
+    <!-- Definitions for Styles and Effects -->
     <defs>
-        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#94a3b8" />
+        <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:0.2" />
+            <stop offset="100%" style="stop-color:#1d4ed8;stop-opacity:0.05" />
+        </linearGradient>
+        <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.2" />
+            <stop offset="100%" style="stop-color:#6d28d9;stop-opacity:0.05" />
+        </linearGradient>
+        <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#10b981;stop-opacity:0.2" />
+            <stop offset="100%" style="stop-color:#047857;stop-opacity:0.05" />
+        </linearGradient>
+        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
         </marker>
-        <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-            <path d="M0,0 L0,6 L9,3 z" fill="#10b981" />
-        </marker>
+        <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+            <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
     </defs>
 
-    <!-- Engine Bounding Box -->
-    <rect x="615" y="60" width="250" height="305" rx="15" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="8,8"/>
-    <text x="740" y="390" fill="#94a3b8" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Universal MCDA Engine</text>
+    <!-- Background -->
+    <rect width="1000" height="600" fill="#0f172a" rx="16"/>
 
-    <!-- Frontend -->
-    <rect x="50" y="160" width="200" height="80" rx="12" fill="#1e293b" stroke="#3b82f6" stroke-width="2"/>
-    <text x="150" y="195" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">Frontend (React / Vite)</text>
-    <text x="150" y="215" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Dynamic UI &amp; State</text>
+    <!-- Title & Subtitle -->
+    <text x="500" y="50" fill="#f8fafc" font-family="Inter, sans-serif" font-size="28" font-weight="bold" text-anchor="middle">Universal Decision Companion</text>
+    <text x="500" y="80" fill="#94a3b8" font-family="Inter, sans-serif" font-size="16" text-anchor="middle">Deep Architecture: Multi-Criteria Decision Analysis (MCDA) Lifecycle</text>
 
-    <!-- Arrow Frontend to Backend -->
-    <line x1="250" y1="200" x2="330" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-    <text x="290" y="190" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Scope JSON</text>
+    <!-- 1. Frontend Layer -->
+    <rect x="50" y="240" width="220" height="120" rx="12" fill="url(#blueGrad)" stroke="#3b82f6" stroke-width="2" />
+    <text x="160" y="280" fill="#f8fafc" font-family="sans-serif" font-size="20" font-weight="bold" text-anchor="middle">React Dashboard</text>
+    <text x="160" y="305" fill="#94a3b8" font-family="sans-serif" font-size="13" text-anchor="middle">Dynamic UI &amp; Framer Motion</text>
+    <text x="160" y="325" fill="#60a5fa" font-family="sans-serif" font-size="12" font-style="italic" text-anchor="middle">"The Perspective Layer"</text>
 
-    <!-- API Layer -->
-    <rect x="340" y="160" width="180" height="80" rx="12" fill="#1e293b" stroke="#10b981" stroke-width="2"/>
-    <text x="430" y="195" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">FastAPI Backend</text>
-    <text x="430" y="215" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Validation &amp; Routing</text>
+    <!-- Arrow to API -->
+    <path d="M 270 300 L 330 300" stroke="#64748b" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+    <text x="300" y="290" fill="#94a3b8" font-family="sans-serif" font-size="11" text-anchor="middle">JSON Context</text>
 
-    <!-- Arrows API to Engine -->
-    <line x1="520" y1="180" x2="620" y2="120" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-    <line x1="520" y1="220" x2="620" y2="280" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
-    <line x1="520" y1="200" x2="620" y2="200" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+    <!-- 2. FastAPI Gateway -->
+    <rect x="340" y="240" width="180" height="120" rx="12" fill="url(#emeraldGrad)" stroke="#10b981" stroke-width="2" />
+    <text x="430" y="285" fill="#f8fafc" font-family="sans-serif" font-size="18" font-weight="bold" text-anchor="middle">API Gateway</text>
+    <text x="430" y="310" fill="#94a3b8" font-family="sans-serif" font-size="13" text-anchor="middle">FastAPI Endpoints</text>
+    <text x="430" y="330" fill="#34d399" font-family="sans-serif" font-size="12" font-style="italic" text-anchor="middle">Validation &amp; Routing</text>
 
-    <!-- Decision Engine Core -->
-    <rect x="630" y="80" width="220" height="70" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="740" y="115" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Normalization Layer</text>
-    <text x="740" y="135" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Min-Max Scale &amp; Math Edge Handling</text>
+    <!-- Bounding Box for MCDA Engine -->
+    <rect x="560" y="110" width="400" height="420" rx="20" fill="none" stroke="#475569" stroke-width="2" stroke-dasharray="10,5" />
+    <text x="760" y="550" fill="#64748b" font-family="sans-serif" font-size="16" font-weight="bold" text-anchor="middle">MCDA Deterministic Engine</text>
 
-    <!-- Analysis Engine -->
-    <rect x="630" y="165" width="220" height="70" rx="12" fill="#1e293b" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="740" y="200" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Scoring &amp; Explanation</text>
-    <text x="740" y="220" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Weighted Sums &amp; Deficit Analysis</text>
+    <!-- 3. Engine Tiers -->
+    
+    <!-- T1: Normalization -->
+    <rect x="590" y="140" width="340" height="70" rx="10" fill="url(#purpleGrad)" stroke="#8b5cf6" stroke-width="2" />
+    <text x="760" y="170" fill="#f8fafc" font-family="sans-serif" font-size="15" font-weight="bold" text-anchor="middle">T1: Normalization Tier</text>
+    <text x="760" y="190" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Min-Max Scaling | Benefit vs. Cost Differentiation</text>
 
-    <!-- Meta-Analysis -->
-    <rect x="630" y="250" width="220" height="70" rx="12" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
-    <text x="740" y="285" fill="#f8fafc" font-family="sans-serif" font-size="14" font-weight="bold" text-anchor="middle">Analysis Engine</text>
-    <text x="740" y="305" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Sensitivity &amp; Confidence Constraints</text>
+    <!-- T2: Synthesis -->
+    <rect x="590" y="235" width="340" height="70" rx="10" fill="url(#purpleGrad)" stroke="#8b5cf6" stroke-width="2" />
+    <text x="760" y="265" fill="#f8fafc" font-family="sans-serif" font-size="15" font-weight="bold" text-anchor="middle">T2: Synthesis Tier (WSM)</text>
+    <text x="760" y="285" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Weighted Sum Model Calculation (Σ w_i * x_norm)</text>
 
-    <!-- Return Arrow -->
-    <path d="M 630 310 Q 430 400 150 240" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5" marker-end="url(#arrow-green)"/>
-    <text x="390" y="340" fill="#10b981" font-family="sans-serif" font-size="13" font-weight="bold" text-anchor="middle">Rankings + Explanations + Meta-Analysis Dashboard Payload</text>
+    <!-- T3: Explanation -->
+    <rect x="590" y="330" width="340" height="70" rx="10" fill="url(#purpleGrad)" stroke="#c084fc" stroke-width="2" />
+    <text x="760" y="360" fill="#f8fafc" font-family="sans-serif" font-size="15" font-weight="bold" text-anchor="middle">T3: Explanation Tier</text>
+    <text x="760" y="380" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Deficit Analysis | Why-Not-Winner Logic</text>
+
+    <!-- T4: Meta-Analysis -->
+    <rect x="590" y="425" width="340" height="70" rx="10" fill="url(#purpleGrad)" stroke="#f59e0b" stroke-width="2" />
+    <text x="760" y="455" fill="#f8fafc" font-family="sans-serif" font-size="15" font-weight="bold" text-anchor="middle">T4: Meta-Analysis Tier</text>
+    <text x="760" y="475" fill="#94a3b8" font-family="sans-serif" font-size="12" text-anchor="middle">Sensitivity Testing (±10%) | Confidence Protocol</text>
+
+    <!-- Internal Engine Arrows -->
+    <path d="M 760 210 L 760 235" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+    <path d="M 760 305 L 760 330" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+    <path d="M 760 400 L 760 425" stroke="#8b5cf6" stroke-width="1.5" fill="none" marker-end="url(#arrowhead)" />
+
+    <!-- Main Entry to Engine -->
+    <path d="M 520 300 Q 540 300 590 175" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#arrowhead)" />
+
+    <!-- Conclusion Path -->
+    <path d="M 930 460 Q 980 460 980 300 T 520 300" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="5,5" marker-end="url(#arrowhead)" />
+    <text x="470" y="510" fill="#10b981" font-family="sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Rankings + Explanations + Simulation Data</text>
 
 </svg>
