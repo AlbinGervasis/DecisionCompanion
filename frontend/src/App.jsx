@@ -6,6 +6,8 @@ import './index.css';
 const TEMPLATES = {
   'Custom Decision': {
     name: "Custom Decision Context",
+    type: "Misc",
+    description: "Generic evaluation for miscellaneous choices.",
     criteria: ['Criterion A', 'Criterion B'],
     weights: { 'Criterion A': 0.5, 'Criterion B': 0.5 },
     types: { 'Criterion A': 'benefit', 'Criterion B': 'cost' },
@@ -13,6 +15,8 @@ const TEMPLATES = {
   },
   'Laptop Purchase': {
     name: "Laptop Purchase",
+    type: "Procurement",
+    description: "Comparing high-end ultrabooks for professional software development.",
     criteria: ['Price', 'Performance', 'Battery', 'Weight'],
     weights: { 'Price': 0.35, 'Performance': 0.3, 'Battery': 0.2, 'Weight': 0.15 },
     types: { 'Price': 'cost', 'Performance': 'benefit', 'Battery': 'benefit', 'Weight': 'cost' },
@@ -24,6 +28,8 @@ const TEMPLATES = {
   },
   'Job Offer Selection': {
     name: "Job Offer Selection",
+    type: "Career",
+    description: "Evaluating career opportunities based on growth potential and cultural fit alongside compensation.",
     criteria: ['Base Salary', 'Growth Potential', 'Commute Time', 'Culture'],
     weights: { 'Base Salary': 0.4, 'Growth Potential': 0.3, 'Commute Time': 0.15, 'Culture': 0.15 },
     types: { 'Base Salary': 'benefit', 'Growth Potential': 'benefit', 'Commute Time': 'cost', 'Culture': 'benefit' },
@@ -35,6 +41,8 @@ const TEMPLATES = {
   },
   'Travel Destination': {
     name: "Travel Destination",
+    type: "Personal",
+    description: "Choosing the next vacation spot by balancing flight costs with safety and activity scores.",
     criteria: ['Flight Cost', 'Weather Score', 'Activities', 'Safety'],
     weights: { 'Flight Cost': 0.3, 'Weather Score': 0.3, 'Activities': 0.2, 'Safety': 0.2 },
     types: { 'Flight Cost': 'cost', 'Weather Score': 'benefit', 'Activities': 'benefit', 'Safety': 'benefit' },
@@ -48,6 +56,8 @@ const TEMPLATES = {
 
 function App() {
   const [activeDecisionName, setActiveDecisionName] = useState('Job Offer Selection');
+  const [decisionType, setDecisionType] = useState(TEMPLATES['Job Offer Selection'].type);
+  const [description, setDescription] = useState(TEMPLATES['Job Offer Selection'].description);
   const [criteria, setCriteria] = useState(TEMPLATES['Job Offer Selection'].criteria);
   const [weights, setWeights] = useState(TEMPLATES['Job Offer Selection'].weights);
   const [criteriaTypes, setCriteriaTypes] = useState(TEMPLATES['Job Offer Selection'].types);
@@ -71,7 +81,7 @@ function App() {
   const handleSaveDecision = () => {
     const newHistory = {
       ...savedDecisions,
-      [activeDecisionName]: { criteria, weights, types: criteriaTypes, options }
+      [activeDecisionName]: { criteria, weights, types: criteriaTypes, options, type: decisionType, description }
     };
     setSavedDecisions(newHistory);
     localStorage.setItem('smartDecisionHistory', JSON.stringify(newHistory));
@@ -82,6 +92,8 @@ function App() {
     const data = isHistory ? savedDecisions[templateName] : TEMPLATES[templateName];
     if (!data) return;
     setActiveDecisionName(isHistory ? templateName : data.name);
+    setDecisionType(data.type || 'Custom');
+    setDescription(data.description || '');
     setCriteria(data.criteria);
     setWeights(data.weights);
     setCriteriaTypes(data.types);
@@ -196,13 +208,38 @@ function App() {
           </div>
         </div>
 
-        <input
-          type="text"
-          value={activeDecisionName}
-          onChange={(e) => setActiveDecisionName(e.target.value)}
-          style={{ background: 'transparent', border: 'none', fontSize: '1.5rem', fontWeight: 600, color: '#e2e8f0', outline: 'none' }}
-          placeholder="Decision Context Name"
-        />
+        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+          <div style={{ flex: 1 }}>
+            <label className="text-xs text-purple-400 block mb-1">Decision Context</label>
+            <input
+              type="text"
+              value={activeDecisionName}
+              onChange={(e) => setActiveDecisionName(e.target.value)}
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '1.25rem', fontWeight: 600, color: 'white', outline: 'none', padding: '0.5rem 1rem', borderRadius: '8px', width: '100%' }}
+              placeholder="Decision Name (e.g., Hiring Senior Dev)"
+            />
+          </div>
+          <div style={{ width: '200px' }}>
+            <label className="text-xs text-purple-400 block mb-1">Domain Type</label>
+            <input
+              type="text"
+              value={decisionType}
+              onChange={(e) => setDecisionType(e.target.value)}
+              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '1rem', color: '#8b5cf6', outline: 'none', padding: '0.65rem 1rem', borderRadius: '8px', width: '100%', fontWeight: 'bold' }}
+              placeholder="Type (e.g., Career)"
+            />
+          </div>
+        </div>
+
+        <div style={{ marginTop: '0.5rem' }}>
+          <label className="text-xs text-purple-400 block mb-1">Evaluation Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)', outline: 'none', padding: '0.5rem 1rem', borderRadius: '8px', width: '100%', resize: 'none', height: '60px' }}
+            placeholder="Briefly describe the scenario being evaluated..."
+          />
+        </div>
       </header>
 
       {/* Main Grid */}
@@ -253,14 +290,28 @@ function App() {
                   className="w-full cursor-pointer accent-purple-500" style={{ width: '100%', accentColor: '#a78bfa', cursor: 'pointer' }}
                 />
 
+                <div style={{ marginTop: '0.5rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>
+                    <span>Relative Weight</span>
+                    <span>Rank Impact</span>
+                  </div>
+                  <div style={{ height: '4px', background: 'rgba(0,0,0,0.3)', borderRadius: '2px', overflow: 'hidden' }}>
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${weights[c] * 100}%` }}
+                      style={{ height: '100%', background: '#a78bfa' }}
+                    />
+                  </div>
+                </div>
+
                 <div className="flex justify-between text-xs mt-2 text-gray-400" style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', marginTop: '0.5rem', color: 'rgba(255,255,255,0.5)' }}>
                   <select
                     value={criteriaTypes[c]}
                     onChange={(e) => setCriteriaTypes({ ...criteriaTypes, [c]: e.target.value })}
                     style={{ background: 'transparent', border: 'none', color: 'inherit', outline: 'none', cursor: 'pointer' }}
                   >
-                    <option value="benefit" style={{ color: 'black' }}>Higher is Better</option>
-                    <option value="cost" style={{ color: 'black' }}>Lower is Better</option>
+                    <option value="benefit" style={{ color: 'black' }}>Benefit (Higher+)</option>
+                    <option value="cost" style={{ color: 'black' }}>Cost (Lower-)</option>
                   </select>
                 </div>
               </div>
@@ -345,12 +396,14 @@ function App() {
               >
                 {results.analysis && (
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div style={{ background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '1.5rem', borderRadius: '12px' }}>
+                    <div style={{ background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', padding: '1.5rem', borderRadius: '12px', position: 'relative', overflow: 'hidden' }}>
+                      <div style={{ position: 'absolute', bottom: 0, left: 0, height: '4px', background: '#3b82f6', width: `${Math.min(results.analysis.confidence.score * 500, 100)}%` }} />
                       <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#60a5fa', margin: '0 0 0.8rem 0' }}><BarChart2 size={18} /> Confidence Protocol</h4>
                       <p style={{ fontSize: '0.95rem', margin: 0, color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>{results.analysis.confidence.message}</p>
                     </div>
 
-                    <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '1.5rem', borderRadius: '12px' }}>
+                    <div style={{ background: 'rgba(245, 158, 11, 0.1)', border: '1px solid rgba(245, 158, 11, 0.3)', padding: '1.5rem', borderRadius: '12px', position: 'relative', overflow: 'hidden' }}>
+                      <div style={{ position: 'absolute', bottom: 0, left: 0, height: '4px', background: '#fbbf24', width: `${results.analysis.sensitivity.stability_score}%` }} />
                       <h4 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#fbbf24', margin: '0 0 0.8rem 0' }}><Zap size={18} /> Stability Analysis</h4>
                       <p style={{ fontSize: '0.95rem', margin: 0, color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>{results.analysis.sensitivity.message}</p>
                     </div>
@@ -388,7 +441,17 @@ function App() {
                           <h3 style={{ fontSize: '1.4rem', color: isWinner ? '#34d399' : 'white', display: 'flex', alignItems: 'center', gap: '0.5rem', margin: 0 }}>
                             <span style={{ opacity: 0.5 }}>#{idx + 1}</span> {name}
                           </h3>
-                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{score.toFixed(3)}</div>
+                          <div style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>{(score * 100).toFixed(1)}%</div>
+                        </div>
+
+                        {/* Ranking Bar Visualization */}
+                        <div style={{ height: '8px', background: 'rgba(255,255,255,0.05)', borderRadius: '4px', overflow: 'hidden', marginBottom: '1.5rem' }}>
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${score * 100}%` }}
+                            transition={{ duration: 0.8, ease: "easeOut", delay: idx * 0.1 }}
+                            style={{ height: '100%', background: isWinner ? 'linear-gradient(90deg, #10b981, #34d399)' : 'linear-gradient(90deg, #6366f1, #8b5cf6)' }}
+                          />
                         </div>
 
                         {isWinner ? (
