@@ -1,7 +1,15 @@
+"""
+DecisionCompanion Engine Core - v2.1.0
+Implements a multi-layered Multi-Criteria Decision Analysis (MCDA) framework.
+Provides Deterministic Weighted Sum Models (WSM) and Sensitivity Meta-Analysis.
+"""
 from typing import List, Dict, Union, Tuple, Any
 import copy
 
+VERSION = "2.1.0"
+
 class NormalizationLayer:
+    """Handles data transformation and scale standardization (Min-Max)."""
     @staticmethod
     def normalize(options: Dict[str, Dict[str, float]],
                   criteria: List[str],
