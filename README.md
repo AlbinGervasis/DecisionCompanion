@@ -1,20 +1,26 @@
 # Universal Decision Companion – A Transparent Multi-Criteria Framework
 
-## 1. Problem Understanding
-Decisions like comparing job offers, buying a laptop, or picking a tech stack are often made with gut feelings or messy spreadsheets. This system functions as a **Universal Multi-Criteria Decision Framework**. It isn't just a basic app—it is a deeply contextual engine capable of evaluating *any* multi-dimensional scenario using weighted matrices. 
+## 📋 1. Problem Understanding
+The core challenge of this project was to move beyond arbitrary "gut feeling" comparisons into a **Deterministic Decision Space**.
 
-## Supported Decision Domains (Templates Built-In)
-The system algorithm is fully abstracted, meaning it supports any numeric decision path without hardcoded variables. Examples built directly into the UI include:
-*   **Job Offer Selection**: Evaluates Base Salary, Commute Time, Growth Potential, and Culture.
-*   **Laptop Purchase**: Evaluates Price, Performance, Battery Life, and Weight.
-*   **Travel Destination**: Evaluates Flight Cost, Weather Score, Safety, and Activities.
-*   **Enterprise Scaling**: Can easily be configured ad-hoc to evaluate Vendor Selection, Cloud Providers, or Hiring Candidates.
+| Surface Requirement | Engineering Reality (Intellectual Depth) |
+| :--- | :--- |
+| "Compare multiple options" | Implement a multi-dimensional **Normalization Layer** to standardise units (Currency, Weight, Scores). |
+| "Show the best choice" | Execute a **Weighted Sum Model (WSM)** to calculate aggregate utility. |
+| "Explain the calculation" | Engineer a **Deficit Analysis Heuristic** to identify "Why-Not" reasons for lower ranks. |
+| "Ensure reliability" | Implement a **Sensitivity Analysis Loop** to test decision stability (±10% weight variance). |
 
-## 2. Assumptions
-*   Criteria weights typically map to a relative scale (e.g., summing to 1.0 or 100).
-*   Users provide numerical values for the evaluated options.
-*   At least 2 options are required for meaningful ranking.
-*   Criteria types must be explicitly defined as "benefit" (higher is better) or "cost" (lower is better).
+---
+
+## 📄 2. Assumptions & Logical Constraints
+To maintain a high-integrity decision engine, the following logical assumptions were applied:
+
+| Assumption | Impact on Architecture | Validation Strategy |
+| :--- | :--- | :--- |
+| **Numeric Uniformity** | All values must be converted to numeric form before processing. | Standardized input validation in `EvaluationRequest`. |
+| **Linear Preference** | Assumes utility scales linearly with value. | Documented in Technical Limitations. |
+| **Criteria Independence** | Criteria (e.g., Performance vs Price) are evaluated in isolation. | Mitigated via **Stability Scoring** simulation. |
+| **Cardinal Weights** | All relative weights must reflect user-defined priorities. | Visualised via **Impact Bar Charts** in UI. |
 
 ## 3. Detailed Architecture & Decision Lifecycle
 The DecisionCompanion follows a sophisticated multi-stage pipeline designed for both mathematical rigor and human interpretability.
