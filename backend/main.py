@@ -4,7 +4,8 @@ from pydantic import BaseModel
 from typing import Dict, List
 import engine
 
-app = FastAPI(title="SmartDecision API")
+VERSION = "2.1.0"
+app = FastAPI(title="SmartDecision API - v" + VERSION)
 
 # Setup CORS for the React Frontend
 app.add_middleware(
